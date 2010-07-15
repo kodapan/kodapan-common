@@ -1,0 +1,48 @@
+Some of the packages and classes:
+
+package se.kodapan.lang.reflection.augmentation
+package se.kodapan.lang.reflection.augmentation.annotations
+  UML class diagram syntax annotations that is mapped to a simple meta model.
+  A simplification of (based on) the annotations in http://silvertejp.tigris.org/
+
+  @BinaryAssociationEnd(aggregation = COMPOSITE,
+                        otherEndName = "parent",
+                        multiplicity = "0..3, 5..*",
+                        qualification = String.class)
+  private Map<String, Set<Child>> children;
+
+
+package se.kodapan.collections
+  Decorators, utilities for Map<K, Set<V>>, etc
+
+
+package se.kodapan.io
+
+  class se.kodapan.io.SerializableBean
+    Bean reflection in java.io.Externalizable for backwards compatible java.io.Serializable after refactoring.
+    Somewhat better than plain old java.io.Serializable but still not quite implemented,
+    it needs a bunch of @Annotations and what not.
+
+  class se.kodapan.io.GermanicInputStreamReader
+    Assumes ISO8859-1 and detects UTF-8 if it's in Swedish. Should be easy to extend for more languages.
+
+
+package se.kodapan.io.http
+  HttpGetReader, HttpGetInputStream, etc via HttpAccessor.
+
+  class se.kodapan.io.http.HttpAccessor
+    A facade on top of Apache HttpClient 4.0
+    with features such as attempting to follow redirects in HTML, javascript, etc.
+
+  class se.kodapan.html.NekoHtmlTool
+    Semi-retarded xpath replacements that allows for quick and dirty information extraction via DOM.
+
+
+package se.kodapan.net
+
+  class se.kodapan.net.URIUtil
+    Resolves badly formatted URIs, gathers query parts, etc.
+
+
+
+karl.wettin@kodapan.se
