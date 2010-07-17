@@ -73,6 +73,7 @@ public class ReflectionUtil {
     for (Class _class : allClasses) {
       for (Field field : Arrays.asList(_class.getDeclaredFields())) {
         if (!Modifier.isFinal(field.getModifiers())
+            && !Modifier.isTransient(field.getModifiers())
             && !Modifier.isStatic(field.getModifiers())) {
           allFields.put(field.getName(), field);
         }

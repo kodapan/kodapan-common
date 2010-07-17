@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.URI;
 import java.util.*;
 
 /**
@@ -61,6 +62,11 @@ public class BshScriptSerializer {
     return nameOrExpression;
   }
 
+  private static String getString(String input) {
+    StringBuilder sb = new StringBuilder(input.length() + 50);
+    sb.append("\"").append((input).replaceAll("\"", "\\\"")).append("\"");
+    return sb.toString();
+  }
 
   public static String getAttributeOrExpression(String name, StringBuilder output, Object object, Map<Object, String> cache) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InterruptedException {
 
@@ -106,11 +112,19 @@ public class BshScriptSerializer {
       nameOrExpression = bsh.toString();
 
     } else if (object.getClass() == String.class) {
-      bsh./*append(name).append("=").*/append("\"").append(((String) object).replaceAll("\"", "\\\"")).append("\"");
+      bsh.append(getString((String)object));
       nameOrExpression = bsh.toString();
 
-    } else if (object.getClass() == Date.class) {
+    } else if (object.getClass() == java.util.Date.class) {
       bsh./*append(name).append("=").*/append("new java.util.Date(").append(String.valueOf(((Date) object).getTime())).append("l");
+      nameOrExpression = bsh.toString();
+
+    } else if (object.getClass() == java.net.URI.class) {
+      bsh./*append(name).append("=").*/append("new java.net.URI(").append(getString(object.toString())).append(")");
+      nameOrExpression = bsh.toString();
+
+    } else if (object.getClass() == java.net.URL.class) {
+      bsh./*append(name).append("=").*/append("new java.net.URL(").append(getString(object.toString())).append(")");
       nameOrExpression = bsh.toString();
 
     } else {
