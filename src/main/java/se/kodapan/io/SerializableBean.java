@@ -51,7 +51,7 @@ public class SerializableBean implements Serializable, Externalizable {
     Map<Field, Method> getters = SerializableBean.getters.get(getClass());
     if (getters == null) {
       getters = new HashMap<Field, Method>();
-      for (Field field : ReflectionUtil.gatherAllBeanFields(getClass())) {
+      for (Field field : ReflectionUtil.gatherAllBeanFields(getClass()).values()) {
         try {
           getters.put(field, ReflectionUtil.getGetter(field));
         } catch (NoSuchMethodException e) {
@@ -83,7 +83,7 @@ public class SerializableBean implements Serializable, Externalizable {
     Map<String, Method> setters = SerializableBean.setters.get(getClass());
     if (setters == null) {
       setters = new HashMap<String, Method>();
-      for (Field field : ReflectionUtil.gatherAllBeanFields(getClass())) {
+      for (Field field : ReflectionUtil.gatherAllBeanFields(getClass()).values()) {
         try {
           setters.put(field.getName(), ReflectionUtil.getSetter(field));
         } catch (NoSuchMethodException e) {

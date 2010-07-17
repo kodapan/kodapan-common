@@ -30,6 +30,7 @@ import java.util.*;
  */
 public class ListMap<K, V> implements Map<K, List<V>>, Externalizable {
 
+  private static final long serialVersionUID = 1l;
   private Map<K, List<V>> map = new HashMap<K, List<V>>();
 
   @Override

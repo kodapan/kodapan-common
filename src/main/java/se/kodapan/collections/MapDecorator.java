@@ -16,6 +16,7 @@
 
 package se.kodapan.collections;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -24,7 +25,9 @@ import java.util.Set;
  * @author kalle
  * @since 2010-jul-10 01:12:32
  */
-public abstract class MapDecorator<K, V> implements Map<K, V> {
+public abstract class MapDecorator<K, V> implements Map<K, V>, Serializable {
+
+  private static final long serialVersionUID = 1l;
 
   @Override
   public int size() {

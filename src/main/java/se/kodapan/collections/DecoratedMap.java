@@ -16,13 +16,16 @@
 
 package se.kodapan.collections;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
  * @author kalle
  * @since 2010-jul-13 23:56:45
  */
-public class DecoratedMap<K, V> extends MapDecorator<K, V>{
+public class DecoratedMap<K, V> extends MapDecorator<K, V> implements Serializable  {
+
+  private static final long serialVersionUID = 1l;
 
   private Map<K, V> decoratedMap;
 

@@ -48,18 +48,33 @@ public class ReflectionUtil {
     return field.getDeclaringClass().getMethod(setterName.toString(), field.getType());
   }
 
-
-  public static List<Field> gatherAllBeanFields(Class implementation) {
-    return  gatherAllBeanFields(gatherAllClasses(implementation));
+  public static Method getSetter(Object instance, String fieldName) throws NoSuchMethodException {
+    return getSetter(instance.getClass(), fieldName);
   }
 
-  public static List<Field> gatherAllBeanFields(Set<Class> allClasses) {    
-    List<Field> allFields = new ArrayList<Field>();
+  public static Method getSetter(Class _class, String fieldName) throws NoSuchMethodException {
+    return getSetter(gatherAllBeanFields(_class).get(fieldName));
+  }
+
+  public static Method getGetter(Class _class, String fieldName) throws NoSuchMethodException {
+    return getGetter(gatherAllBeanFields(_class).get(fieldName));
+  }
+
+  public static Method getGetter(Object instance, String fieldName) throws NoSuchMethodException {
+    return getGetter(instance.getClass(), fieldName);
+  }
+
+  public static Map<String, Field> gatherAllBeanFields(Class implementation) {
+    return gatherAllBeanFields(gatherAllClasses(implementation));
+  }
+
+  public static Map<String, Field> gatherAllBeanFields(Set<Class> allClasses) {
+    Map<String, Field> allFields = new HashMap<String, Field>();
     for (Class _class : allClasses) {
       for (Field field : Arrays.asList(_class.getDeclaredFields())) {
         if (!Modifier.isFinal(field.getModifiers())
             && !Modifier.isStatic(field.getModifiers())) {
-          allFields.add(field);
+          allFields.put(field.getName(), field);
         }
       }
     }
