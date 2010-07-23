@@ -178,8 +178,10 @@ public class NekoHtmlTool {
   }
 
   public static void getText(Node node, StringBuilder sb) {
+
     if (node.getClass().getName().equals("org.apache.xerces.dom.TextImpl")
-        && !node.getParentNode().getLocalName().equalsIgnoreCase("script")) {
+        && node.getParentNode() != null
+        && !"script".equalsIgnoreCase(node.getParentNode().getLocalName())) {
       String text = node.getTextContent();
       if (text != null) {
         text = text.trim();
@@ -202,7 +204,7 @@ public class NekoHtmlTool {
   }
 
   public static void print(Node node, String indent) {
-    if (node.getClass().getName().equals("org.apache.xerces.dom.TextImpl")) {
+    if (isTextNode(node)) {
       String text = node.getTextContent();
       if (text != null) {
         text = text.trim();
@@ -246,6 +248,14 @@ public class NekoHtmlTool {
   }
 
   public static Node getNode(Node root, int... path) {
+    List<Integer> foor = new ArrayList<Integer>();
+    for (int i : path) {
+      foor.add(i);
+    }
+    return getNode(root, foor);
+  }
+
+  public static Node getNode(Node root, Iterable<Integer> path) {
     Node current = root;
     for (int index : path) {
       NodeList childNodes = current.getChildNodes();
@@ -402,7 +412,9 @@ public class NekoHtmlTool {
   }
 
 
-  /** Pattern \\s does not match (char)160 */
+  /**
+   * Pattern \\s does not match (char)160
+   */
   public static String replaceNonBreakingSpaces(String text) {
     // replace &NBSP; with normal whitespace
     text = text.replaceAll(new String(new char[]{160}), " ");
@@ -413,6 +425,7 @@ public class NekoHtmlTool {
   public static String normalizeText(Node node) {
     return normalizeText(node.getTextContent());
   }
+
   public static String normalizeText(String text) {
     // replace &NBSP; with normal whitespace
     text = text.replaceAll(new String(new char[]{160}), " ");
@@ -434,10 +447,7 @@ public class NekoHtmlTool {
 
 
   public static void writeText(Node node, final Writer out) throws IOException {
-    if (node.getParentNode() != null
-//        && node.getParentNode().getNodeName().equals("#comment")
-        && "#text".equals(node.getNodeName())
-        && !"STYLE".equals(node.getParentNode().getNodeName())) {
+    if (isTextNode(node)) {
       out.write(normalizeText(node));
     } else {
       NodeList children = node.getChildNodes();
@@ -450,18 +460,25 @@ public class NekoHtmlTool {
 
   }
 
+  public static boolean isTextNode(Node node) {
+    return node.getParentNode() != null
+//        && node.getParentNode().getNodeName().equals("#comment")
+        && "#text".equals(node.getNodeName())
+        && !"STYLE".equals(node.getParentNode().getNodeName());
+  }
 
 
   public static Node findFirstSiblingNodeByNodeName(Node node, String nodeName) {
-    while((node = node.getNextSibling()) != null) {
+    while ((node = node.getNextSibling()) != null) {
       if (nodeName.equals(node.getNodeName())) {
         return node;
       }
     }
     return null;
   }
+
   public static Node findFirstParentNodeByNodeName(Node node, String nodeName) {
-    while((node = node.getParentNode()) != null) {
+    while ((node = node.getParentNode()) != null) {
       if (nodeName.equals(node.getNodeName())) {
         return node;
       }

@@ -69,6 +69,15 @@ public class MapSet<K, V> extends MapDecorator<K, Set<V>>
   }
 
 
+  @Override
+  public void putAll(Map<? extends K, ? extends Set<V>> map) {
+    for (Map.Entry<? extends K, ? extends Set<V>> e : map.entrySet()) {
+      for (V v : e.getValue()) {
+        add(e.getKey(), v);
+      }
+    }
+  }
+
   public boolean add(K k, V v) {
     if (v == null) {
       throw new NullPointerException("No null values");
