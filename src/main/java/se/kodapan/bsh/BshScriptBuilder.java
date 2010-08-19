@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.util.*;
-
+import org.apache.commons.lang.StringEscapeUtils;
 /**
  * @author kalle
  * @since 2010-jul-16 06:22:29
@@ -140,13 +140,17 @@ public class BshScriptBuilder {
     return name;
   }
 
-
-
-
-
-  private static String getString(String input) {
+  public static String getString(String input) {
+    if (input.contains("\"")) {
+      System.currentTimeMillis();
+    }
     StringBuilder sb = new StringBuilder(input.length() + 50);
-    sb.append("\"").append((input).replaceAll("\"", "\\\"")).append("\"");
+    sb.append("\"");
+    input = input.replaceAll("\\\\", "\\\\");
+    input = input.replaceAll("\"", "\\\"");
+    input = input.replaceAll("\n", "\\n");
+    sb.append(input);
+    sb.append("\"");
     return sb.toString();
   }
 

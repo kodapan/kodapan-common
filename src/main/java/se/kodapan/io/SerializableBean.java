@@ -31,14 +31,17 @@ import java.util.Map;
  * todo add annotation for local version of entity class
  * todo add annotation for refactored fields
  *
+ * Caveats:
+ * Requires public getter and setter for all fields declared in the same class as the field.
  *
+ * 
  * @author kalle
  * @since 2010-jul-13 04:26:47
  */
 public class SerializableBean implements Serializable, Externalizable {
 
-  private static long serialVersionUID = 1l;
-  public static Logger log = LoggerFactory.getLogger(SerializableBean.class);
+  private static final long serialVersionUID = 5450504073296394022l;
+  private static final Logger log = LoggerFactory.getLogger(SerializableBean.class);
 
 
   private static Map<Class, Map<Field, Method>> getters = new HashMap<Class, Map<Field, Method>>();
@@ -116,5 +119,47 @@ public class SerializableBean implements Serializable, Externalizable {
 
   }
 
-
+//  @Override
+//  public String toString() {
+//    StringBuilder sb = new StringBuilder();
+//    sb.append(super.toString()).append("{");
+//
+//    Map<Field, Method> getters = SerializableBean.getters.get(getClass());
+//    if (getters == null) {
+//      getters = new HashMap<Field, Method>();
+//      for (Field field : ReflectionUtil.gatherAllBeanFields(getClass()).values()) {
+//        try {
+//          getters.put(field, ReflectionUtil.getGetter(field));
+//        } catch (NoSuchMethodException e) {
+//          throw new RuntimeException(e);
+//        }
+//      }
+//      SerializableBean.getters.put(getClass(), getters);
+//    }
+//
+//    boolean needsComma = false;
+//    for (Map.Entry<Field, Method> e : getters.entrySet()) {
+//
+//      Object value;
+//      try {
+//        value = (e.getValue().invoke(this));
+//      } catch (IllegalAccessException e1) {
+//        throw new RuntimeException(e1);
+//      } catch (InvocationTargetException e1) {
+//        throw new RuntimeException(e1);
+//      }
+//      if (value != null) {
+//        if (needsComma) {
+//          sb.append(", ");
+//        }
+//        sb.append(e.getKey().getName()).append("=");
+//        sb.append(value.toString());
+//        needsComma = true;
+//      }
+//
+//    }
+//
+//    sb.append("}");
+//    return sb.toString();
+//  }
 }

@@ -16,6 +16,7 @@
 
 package se.kodapan.html;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -25,6 +26,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -32,6 +34,8 @@ import java.util.List;
  * @since 2009-jul-12 16:58:57
  */
 public class NekoHtmlTool {
+
+  public static final XPath xpath = XPathFactory.newInstance().newXPath();
 
   public static interface NodeAcceptor {
     public abstract boolean accept(Node node);
@@ -374,8 +378,10 @@ public class NekoHtmlTool {
   public static void writeXML(Node node, Writer out) throws IOException {
 
     if ("#text".equals(node.getNodeName())) {
-      out.write(node.getTextContent());
-
+      // no empty text nodes!
+      if (!"".equals(normalizeText(node).replaceAll("\\s+", ""))) {
+        out.write(node.getTextContent());
+      }
     } else {
 
       out.write("<");
@@ -449,6 +455,7 @@ public class NekoHtmlTool {
   public static void writeText(Node node, final Writer out) throws IOException {
     if (isTextNode(node)) {
       out.write(normalizeText(node));
+      out.write("\n");
     } else {
       NodeList children = node.getChildNodes();
       if (children != null) {
@@ -462,9 +469,10 @@ public class NekoHtmlTool {
 
   public static boolean isTextNode(Node node) {
     return node.getParentNode() != null
-//        && node.getParentNode().getNodeName().equals("#comment")
-        && "#text".equals(node.getNodeName())
-        && !"STYLE".equals(node.getParentNode().getNodeName());
+//        && node.getParentNode().getNodeName().equals("#comment")    // todo why is this commented out?
+        && "#text".equalsIgnoreCase(node.getNodeName())
+        && !"STYLE".equalsIgnoreCase(node.getParentNode().getNodeName())
+        && !"SCRIPT".equalsIgnoreCase(node.getParentNode().getNodeName());
   }
 
 
@@ -484,5 +492,97 @@ public class NekoHtmlTool {
       }
     }
     return null;
+  }
+
+  public static String getXPath(Node node) {
+    return getXPath(node, node.getOwnerDocument());
+  }
+
+  public static String getXPath(Node node, Node root) {
+
+    while (isTextNode(node)) {
+      node = node.getParentNode();
+    }
+    Node in = node;
+
+    StringBuilder out = new StringBuilder();
+
+    while (node != null && !root.equals(node)) {
+      int i = 0;
+      Node sibling = node;
+      while ((sibling = sibling.getPreviousSibling()) != null) {
+        if (!isTextNode(sibling)) {
+          if (sibling.getNodeName().equals(node.getNodeName())) {
+            i++;
+          }
+        }
+      }
+
+      StringBuilder path = new StringBuilder();
+      path.append("/").append(node.getNodeName());
+      if (i > 0) {
+        path.append("[position() = ").append(String.valueOf(i + 1)).append("]");
+      }
+      out.insert(0, path);
+
+      node = node.getParentNode();
+      while (isTextNode(node)) {
+        node = node.getParentNode();
+      }
+    }
+
+    if (!root.equals(in.getOwnerDocument())) {
+      out.deleteCharAt(0);
+    }
+
+//    try {
+//      XPathFactory factory = XPathFactory.newInstance();
+//      XPath xp = factory.newXPath();
+//      XPathExpression exp = xp.compile(out.toString());
+//      Node foo = (Node)exp.evaluate(root, XPathConstants.NODE);
+//      System.currentTimeMillis();
+//    } catch (Exception e) {
+//      e.printStackTrace();
+//    }
+
+
+    return out.toString();
+  }
+
+  public static int[] getPath(Node node) {
+    List<Integer> path = new ArrayList<Integer>();
+    while (node.getParentNode() != null) {
+      int i = 0;
+      Node tmp = node;
+      while ((tmp = tmp.getPreviousSibling()) != null) {
+        i++;
+      }
+      path.add(0, i);
+      node = node.getParentNode();
+    }
+    int[] result = new int[path.size()];
+    for (int i = 0; i < path.size(); i++) {
+      result[i] = path.get(i);
+    }
+    return result;
+  }
+
+  public static void removeEmptyTextNodes(Node node) {
+    NodeList children = node.getChildNodes();
+    List<Node> nodes = new ArrayList<Node>();
+    for (int i=0; i<children.getLength(); i++) {
+      nodes.add(children.item(i));
+    }
+    for (Iterator<Node> it = nodes.iterator(); it.hasNext();) {
+      Node child = it.next();
+      if ("#text".equalsIgnoreCase(child.getNodeName())
+          && "".equals(normalizeText(child).replaceAll("\\s+", ""))) {
+        node.removeChild(child);
+        it.remove();
+      }
+    }
+    for (Node child : nodes) {
+      removeEmptyTextNodes(child);
+    }
   }
 }

@@ -36,6 +36,14 @@
     </dependency>
 
     <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.4</version>
+    </dependency>
+
+    
+
+    <dependency>
       <groupId>commons-collections</groupId>
       <artifactId>commons-collections</artifactId>
       <version>3.2.1</version>
@@ -122,7 +130,7 @@
     <repository>
       <id>kodapan</id>
       <name>kodapan</name>
-      <url>scp://kodapan.se/home/kalle/www/kodapan/maven/repository</url>
+      <url>scp://kodapan.se/home/kalle/www/kodapan/maven/repository</url>      
     </repository>
   </distributionManagement>
 
@@ -130,19 +138,19 @@
   <mailingLists>
     <mailingList>
       <name>Project mailing list</name>
-      <post>commons@kodapan.se</post>
+      <post>common@kodapan.se</post>
     </mailingList>
   </mailingLists>
 
   <scm>
-    <url>http://github.com/karlwettin/versionable</url>
-    <connection>scm:git:git://github.com/karlwettin/versionable</connection>
-    <developerConnection>scm:git:git@github.com:karlwettin/versionable.git</developerConnection>
+    <url>http://github.com/karlwettin/kodapan-common</url>
+    <connection>scm:git:git://github.com/karlwettin/kodapan-common</connection>
+    <developerConnection>scm:git:git@github.com:karlwettin/kodapan-common.git</developerConnection>
   </scm>
 
   <issueManagement>
     <system>github</system>
-    <url>http://github.com/karlwettin/geography/issues</url>
+    <url>http://github.com/karlwettin/kodapan-common/issues</url>
   </issueManagement>
 
 </project>

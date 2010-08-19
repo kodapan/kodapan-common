@@ -16,16 +16,13 @@
 
 package se.kodapan.io;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.InputStream;
+import java.io.*;
 
 /**
  * @author kalle
  * @since 2010-jan-09 20:30:36
  */
-public class StreamUtil {
+public class IOUtil {
 
   public static void copy(InputStream input, OutputStream output) throws IOException {
     copy(input, output, 49152, true);
@@ -47,6 +44,29 @@ public class StreamUtil {
     }
 
   }
+
+
+  public static void copy(Reader input, Writer output) throws IOException {
+    copy(input, output, 49152, true);
+  }
+
+  public static void copy(Reader input, Writer output, int bufferSize, boolean closeStreams) throws IOException {
+    copy(input, output, new char[bufferSize], closeStreams);
+  }
+
+  public static void copy(Reader input, Writer output, char[] buffer, boolean closeStreams) throws IOException {
+
+    int read;
+    while ((read = input.read(buffer)) > -1) {
+      output.write(buffer, 0, read);
+    }
+    if (closeStreams) {
+      input.close();
+      output.close();
+    }
+
+  }
+
 
   public static File createTemporaryDirectory(String group, String artifact) throws IOException {
     File tmpDirectory = File.createTempFile(group, artifact);
