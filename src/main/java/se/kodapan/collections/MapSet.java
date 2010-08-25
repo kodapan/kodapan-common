@@ -39,32 +39,32 @@ public class MapSet<K, V> extends MapDecorator<K, Set<V>>
     return new MapSet<K, V>(mapSet) {
       @Override
       public void putAll(Map<? extends K, ? extends Set<V>> map) {
-        super.putAll(map);    //To change body of overridden methods use File | Settings | File Templates.
+        throw new UnsupportedOperationException("Immutable");
       }
 
       @Override
       public boolean add(K k, V v) {
-        return super.add(k, v);    //To change body of overridden methods use File | Settings | File Templates.
+        throw new UnsupportedOperationException("Immutable");
       }
 
       @Override
       public boolean removeSetValue(V v) {
-        return super.removeSetValue(v);    //To change body of overridden methods use File | Settings | File Templates.
+        throw new UnsupportedOperationException("Immutable");
       }
 
       @Override
       public Set<V> put(K k, Set<V> vs) {
-        return super.put(k, vs);    //To change body of overridden methods use File | Settings | File Templates.
+        throw new UnsupportedOperationException("Immutable");
       }
 
       @Override
       public Set<V> remove(Object o) {
-        return super.remove(o);    //To change body of overridden methods use File | Settings | File Templates.
+        throw new UnsupportedOperationException("Immutable");
       }
 
       @Override
       public void clear() {
-        super.clear();    //To change body of overridden methods use File | Settings | File Templates.
+        throw new UnsupportedOperationException("Immutable");
       }
     };
   }
