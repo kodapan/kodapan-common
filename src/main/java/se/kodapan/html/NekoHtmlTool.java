@@ -17,6 +17,7 @@
 package se.kodapan.html;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -25,9 +26,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author kalle
@@ -325,6 +324,31 @@ public class NekoHtmlTool {
       return null;
     } else {
       return nodes;
+    }
+  }
+
+  public static String getAttributeValue(Node node, String attribute, boolean caseSensitive) {
+    if (caseSensitive) {
+      return getAttributeValue(node, attribute);
+    }
+
+    if (node.getAttributes() == null) {
+      return null;
+    }
+    NamedNodeMap attributeNodes = node.getAttributes();
+    Map<String, String> matches = new HashMap<String, String>();
+    for (int i=0; i<attributeNodes.getLength(); i++) {
+      Node attributeNode = attributeNodes.item(i);
+      if (attributeNode.getNodeName().equalsIgnoreCase(attribute)) {
+        matches.put(attributeNode.getNodeName(), attributeNode.getTextContent());
+      }
+    }
+    if (matches.size() == 0) {
+      return null;
+    } else if (matches.size() == 1) {
+      return matches.entrySet().iterator().next().getValue();
+    } else {
+      throw new RuntimeException("Multiple case insensitive matches!");
     }
   }
 
