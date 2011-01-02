@@ -1,5 +1,7 @@
 package se.kodapan.collections;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,5 +39,15 @@ public class ScoreMap<T> extends DecoratedMap<T, Double> {
     return score;
   }
 
+  public Entry<T, Double>[] getHits() {
+    Entry<T, Double>[] hits = (Entry<T, Double>[])entrySet().toArray(new Entry[size()]);
+    Arrays.sort(hits, new Comparator<Entry<T, Double>>(){
+      @Override
+      public int compare(Entry<T, Double> o1, Entry<T, Double> o2) {
+        return o2.getValue().compareTo(o1.getValue());
+      }
+    });
+    return hits;
+  }
 
 }
