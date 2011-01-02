@@ -307,9 +307,7 @@ public class HttpAccessor {
     is.close();
     response.httpResponse.getEntity().consumeContent();
 
-
-    return response.httpResponse.getStatusLine().getStatusCode() >= 200
-        && response.httpResponse.getStatusLine().getStatusCode() <= 299;
+    return true;
   }
 
 
