@@ -365,6 +365,28 @@ public class URIUtil {
     return out.toString();
   }
 
+  public static String getQueryParameter(URI uri, String parameter, boolean caseSensitive) {
+    String value = null;
+    for (QueryParameter queryParameter : getQueryParameters(uri)) {
+      if (caseSensitive) {
+        if (parameter.equals(queryParameter.getName())) {
+          if (value != null) {
+            throw new RuntimeException("Several parameters match name " + parameter);
+          }
+          value = queryParameter.getValue();
+        }
+      } else {
+        if (parameter.equalsIgnoreCase(queryParameter.getName())) {
+          if (value != null) {
+            throw new RuntimeException("Several parameters match name " + parameter);
+          }
+          value = queryParameter.getValue();
+        }
+      }
+    }
+    return value;
+  }
+
   public static List<QueryParameter> getQueryParameters(URI uri) {
     if (uri.getQuery() == null || uri.getQuery().length() == 0) {
       return Collections.emptyList();
