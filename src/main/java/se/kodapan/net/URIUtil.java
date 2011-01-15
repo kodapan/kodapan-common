@@ -408,7 +408,7 @@ public class URIUtil {
     return queryParameters;
   }
 
-  public List<QueryParameter> parseQueryParameters(String query, String encoding) throws UnsupportedEncodingException {
+  public static List<QueryParameter> parseQueryParameters(String query, String encoding) throws UnsupportedEncodingException {
     List<QueryParameter> response = new ArrayList<QueryParameter>();
     String[] params = query.split("&");
     for (String param : params) {
