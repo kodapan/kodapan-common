@@ -26,10 +26,12 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -404,6 +406,26 @@ public class URIUtil {
       }
     }
     return queryParameters;
+  }
+
+  public List<QueryParameter> parseQueryParameters(String query, String encoding) throws UnsupportedEncodingException {
+    List<QueryParameter> response = new ArrayList<QueryParameter>();
+    String[] params = query.split("&");
+    for (String param : params) {
+      String key;
+      String value = null;
+      if (param.indexOf("=") > -1) {
+        String[] split = param.split("=");
+        key = URLDecoder.decode(split[0], encoding);
+        if (split.length == 2) {
+          value = URLDecoder.decode(split[1], encoding);
+        }
+      } else {
+        key = URLDecoder.decode(param, encoding);
+      }
+      response.add(new QueryParameter(key, value));
+    }
+    return response;
   }
 
 
