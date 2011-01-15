@@ -398,7 +398,7 @@ public class URIUtil {
     for (String param : params) {
       if (param.indexOf("=") > -1) {
         String[] split = param.split("=");
-        queryParameters.add(new QueryParameter(split[0], split[1]));
+        queryParameters.add(new QueryParameter(split[0], split.length == 2 ? split[1] : null));
       } else {
         queryParameters.add(new QueryParameter(param));
       }
