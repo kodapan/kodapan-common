@@ -3,13 +3,24 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+
   <groupId>se.kodapan.common</groupId>
-  <artifactId>common</artifactId>
-  <version>0.1-SNAPSHOT</version>
+  <artifactId>silvertejp</artifactId>
+  <version>0.2-SNAPSHOT</version>
 
   <packaging>jar</packaging>
 
   <dependencies>
+
+    <dependency>
+      <groupId>se.kodapan.common</groupId>
+      <artifactId>silvertejp-annotations</artifactId>
+      <version>0.2-SNAPSHOT</version>
+    </dependency>
 
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -17,39 +28,6 @@
       <version>1.5.6</version>
     </dependency>
 
-    <dependency>
-      <groupId>nekohtml</groupId>
-      <artifactId>nekohtml</artifactId>
-      <version>1.9.6.2</version>
-    </dependency>    
-
-    <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpclient</artifactId>
-      <version>4.0</version>
-    </dependency>
-
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>1.4</version>
-    </dependency>
-
-    <dependency>
-      <groupId>commons-lang</groupId>
-      <artifactId>commons-lang</artifactId>
-      <version>2.4</version>
-    </dependency>
-
-    
-
-    <dependency>
-      <groupId>commons-collections</groupId>
-      <artifactId>commons-collections</artifactId>
-      <version>3.2.1</version>
-    </dependency>
-    
-    
 
     <dependency>
       <scope>test</scope>
@@ -90,10 +68,6 @@
 
   </dependencies>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
-  
 
   <build>
     <plugins>

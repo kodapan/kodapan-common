@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.util.*;
-import org.apache.commons.lang.StringEscapeUtils;
+
 /**
  * @author kalle
  * @since 2010-jul-16 06:22:29

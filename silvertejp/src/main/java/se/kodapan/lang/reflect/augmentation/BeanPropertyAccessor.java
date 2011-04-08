@@ -16,8 +16,6 @@
 
 package se.kodapan.lang.reflect.augmentation;
 
-import se.kodapan.lang.reflect.augmentation.annotations.BinaryAssociationEnd;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
