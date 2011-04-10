@@ -16,40 +16,17 @@
 
 package se.kodapan.collections;
 
-import se.kodapan.io.UnsupportedLocalVersion;
-
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
+import java.io.*;
 import java.util.*;
 
 /**
  * @author kalle
  * @since 2010-apr-13 06:38:54
  */
-public class ListMap<K, V> implements Map<K, List<V>>, Externalizable {
+public class ListMap<K, V> implements Map<K, List<V>>, Serializable {
 
   private static final long serialVersionUID = 1l;
   private Map<K, List<V>> map = new HashMap<K, List<V>>();
-
-  @Override
-  public void writeExternal(ObjectOutput objectOutput) throws IOException {
-    objectOutput.writeInt(1); // local version
-    objectOutput.writeObject(map);
-  }
-
-  @Override
-  @SuppressWarnings("unchecked")
-  public void readExternal(ObjectInput objectInput) throws IOException, ClassNotFoundException {
-    int version = objectInput.readInt();
-    if (version == 1) {
-      map = (Map<K, List<V>>)objectInput.readObject();
-    } else {
-      throw new UnsupportedLocalVersion(version, 1);
-    }
-
-  }
 
   public ListMap() {
   }

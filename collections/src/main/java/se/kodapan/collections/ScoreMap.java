@@ -11,6 +11,8 @@ import java.util.Map;
  */
 public class ScoreMap<T> extends DecoratedMap<T, Double> {
 
+  private static final long serialVersionUID = 1l;
+
   public ScoreMap() {
     this(new HashMap<T, Double>());
   }

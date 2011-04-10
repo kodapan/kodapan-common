@@ -16,8 +16,6 @@
 
 package se.kodapan.collections;
 
-import se.kodapan.io.UnsupportedLocalVersion;
-
 import java.io.*;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -98,7 +96,7 @@ public class MapSet<K, V> extends MapDecorator<K, Set<V>>
     if (version == 1) {
       map = (Map) objectInput.readObject();
     } else {
-      throw new UnsupportedLocalVersion(version, 1);
+      throw new IOException("Unsupported local version " + version+ ", expected 1");
     }
   }
 
@@ -118,10 +116,23 @@ public class MapSet<K, V> extends MapDecorator<K, Set<V>>
     }
     Set<V> values = get(k);
     if (values == null) {
-      values = new HashSet<V>();
-      put(k, values);
+      values = valuesFactory(k);
     }
     return values.add(v);    
+  }
+
+  protected synchronized Set<V> valuesFactory(K k) {
+    Set<V> values = get(k);
+    if (values != null) {
+      return values;
+    }
+    values = setFactory();
+    put(k, values);
+    return values;
+  }
+
+  public Set<V> setFactory() {
+    return new HashSet<V>();
   }
 
   public boolean containsSetValue(V v) {

@@ -22,6 +22,11 @@ package se.kodapan.lang.reflect.augmentation;
  */
 public enum Aggregation {
 
-  NOT_SPECIFIED, NONE, AGGREGATED, COMPOSITE
-  
+  NOT_SPECIFIED, NONE, AGGREGATED, COMPOSITE;
+
+  private static final long serialVersionUID = 1l;
+
+
+
+
 }

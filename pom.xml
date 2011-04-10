@@ -3,46 +3,28 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>se.kodapan.common</groupId>
-    <artifactId>common</artifactId>
-    <version>0.2.1-SNAPSHOT</version>
-  </parent>
-
-  <groupId>${project.parent.groupId}</groupId>
-  <artifactId>silvertejp-annotations</artifactId>
-  <version>${project.parent.version}</version>
-
-
-  <packaging>jar</packaging>
-
-  <dependencies>
-
-    <dependency>
-      <scope>test</scope>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.5</version>
-    </dependency>
-
-  </dependencies>
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <version.kodapan.common>0.2-SNAPSHOT</version.kodapan.common>
   </properties>
 
 
-  <build>
+  <groupId>se.kodapan.common</groupId>
+  <artifactId>common</artifactId>
+  <version>0.2.1-SNAPSHOT</version>
 
-    <resources>
-      <resource>
-        <directory>src/main/java</directory>
-        <includes>
-          <include>**/*.java</include>
-          <include>**/*.gwt.xml</include>
-        </includes>
-      </resource>
-    </resources>
+  <packaging>pom</packaging>
+
+  <modules>
+    <module>collections</module>
+    <module>silvertejp</module>
+    <module>silvertejp-annotations</module>
+    <module>misc</module>
+  </modules>
+
+
+
+  <build>
     <plugins>
 
       <plugin>
@@ -69,6 +51,7 @@
           </execution>
         </executions>
       </plugin>
+
 
     </plugins>
 
@@ -118,6 +101,8 @@
     </developer>
   </developers>
 
+
+
   <mailingLists>
     <mailingList>
       <name>Project mailing list</name>
@@ -126,7 +111,7 @@
   </mailingLists>
 
   <scm>
-    <url>http://github.com/karlwettin/kodapan-common</url>
+    <url>http://github.com/karlwettin/kodapan-entity-store</url>
     <connection>scm:git:git://github.com/karlwettin/kodapan-common</connection>
     <developerConnection>scm:git:git@github.com:karlwettin/kodapan-common.git</developerConnection>
   </scm>
@@ -135,5 +120,6 @@
     <system>github</system>
     <url>http://github.com/karlwettin/kodapan-common/issues</url>
   </issueManagement>
+
 
 </project>

@@ -10,7 +10,7 @@
   </parent>
 
   <groupId>${project.parent.groupId}</groupId>
-  <artifactId>silvertejp-annotations</artifactId>
+  <artifactId>collections</artifactId>
   <version>${project.parent.version}</version>
 
 
@@ -32,6 +32,7 @@
   </properties>
 
 
+
   <build>
 
     <resources>
@@ -43,6 +44,7 @@
         </includes>
       </resource>
     </resources>
+
     <plugins>
 
       <plugin>
@@ -52,7 +54,9 @@
           <encoding>UTF-8</encoding>
           <source>1.6</source>
           <target>1.6</target>
+
         </configuration>
+
       </plugin>
 
       <plugin>
