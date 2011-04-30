@@ -28,13 +28,13 @@ import java.util.Set;
  * @author kalle
  * @since 2010-mar-16 19:04:56
  */
-public class MapSet<K, V> extends MapDecorator<K, Set<V>>
-    implements Serializable, Externalizable {
+public class SetMap<K, V> extends MapDecorator<K, Set<V>>
+    implements Serializable {
 
   private static final long serialVersionUID = 1l;
 
-  public static <K, V> MapSet<K, V> unmodifiableMapSet(MapSet<K, V> mapSet) {
-    return new MapSet<K, V>(mapSet) {
+  public static <K, V> SetMap<K, V> unmodifiableMapSet(SetMap<K, V> mapSet) {
+    return new SetMap<K, V>(mapSet) {
       @Override
       public void putAll(Map<? extends K, ? extends Set<V>> map) {
         throw new UnsupportedOperationException("Immutable");
@@ -69,11 +69,11 @@ public class MapSet<K, V> extends MapDecorator<K, Set<V>>
 
   private Map<K, Set<V>> map;
 
-  public MapSet() {
+  public SetMap() {
     this(new HashMap<K, Set<V>>());
   }
 
-  public MapSet(Map<K, Set<V>> map) {
+  public SetMap(Map<K, Set<V>> map) {
     this.map = map;
   }
 
@@ -81,25 +81,6 @@ public class MapSet<K, V> extends MapDecorator<K, Set<V>>
   protected Map<K, Set<V>> getDecoratedMap() {
     return map;
   }
-
-  @Override
-  public void writeExternal(ObjectOutput objectOutput) throws IOException {
-    objectOutput.writeInt(1); // local object version
-    objectOutput.writeObject(map);
-  }
-
-
-  @Override
-  @SuppressWarnings("unchecked")
-  public void readExternal(ObjectInput objectInput) throws IOException, ClassNotFoundException {
-    int version = objectInput.readInt();
-    if (version == 1) {
-      map = (Map) objectInput.readObject();
-    } else {
-      throw new IOException("Unsupported local version " + version+ ", expected 1");
-    }
-  }
-
 
   @Override
   public void putAll(Map<? extends K, ? extends Set<V>> map) {
