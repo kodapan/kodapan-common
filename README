@@ -1,3 +1,5 @@
+Collection of small projects that I tend to use a lot.
+
 Some of the packages and classes:
 
 package se.kodapan.lang.reflection.augmentation
@@ -44,5 +46,6 @@ package se.kodapan.net
     Resolves badly formatted URIs, gathers query parts, etc.
 
 
+Also available in maven repository at <http://kodapan.se/maven/repository>.
 
 karl.wettin@kodapan.se
