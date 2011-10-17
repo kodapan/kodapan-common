@@ -6,12 +6,12 @@
   <parent>
     <groupId>se.kodapan.common</groupId>
     <artifactId>common</artifactId>
-    <version>0.2.2-SNAPSHOT</version>
+    <version>0.2.2</version>
   </parent>
 
   <groupId>se.kodapan.common</groupId>
   <artifactId>silvertejp-annotations</artifactId>
-  <version>0.2.2-SNAPSHOT</version>
+  <version>0.2.2</version>
 
 
   <packaging>jar</packaging>

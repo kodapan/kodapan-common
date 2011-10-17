@@ -10,7 +10,7 @@
 
   <groupId>se.kodapan.common</groupId>
   <artifactId>common</artifactId>
-  <version>0.2.2-SNAPSHOT</version>
+  <version>0.2.2</version>
 
   <packaging>pom</packaging>
 
@@ -82,7 +82,7 @@
   <distributionManagement>
     <repository>
       <id>kodapan</id>
-      <url>scp://kodapan.se/home/kalle/www/kodapan/maven/repository</url>
+      <url>scp://maven.kodapan.se/var/www/maven</url>
     </repository>
   </distributionManagement>
 
@@ -106,12 +106,12 @@
   <mailingLists>
     <mailingList>
       <name>Project mailing list</name>
-      <post>common@kodapan.se</post>
+      <post>common@projects.kodapan.se</post>
     </mailingList>
   </mailingLists>
 
   <scm>
-    <url>http://github.com/karlwettin/kodapan-entity-store</url>
+    <url>http://github.com/karlwettin/kodapan-common</url>
     <connection>scm:git:git://github.com/karlwettin/kodapan-common</connection>
     <developerConnection>scm:git:git@github.com:karlwettin/kodapan-common.git</developerConnection>
   </scm>
