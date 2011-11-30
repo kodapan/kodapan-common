@@ -55,6 +55,64 @@ public class URIUtil {
     return map;
   }
 
+  /**
+   * This method replace {@link URI#URI(String, String, String, int, String, String, String)} but does not encode the query part!
+   *
+   * @param scheme
+   * @param userInfo
+   * @param host
+   * @param port
+   * @param path
+   * @param query
+   * @param fragment
+   * @return
+   * @throws URISyntaxException
+   */
+  public static URI factory(String scheme, String userInfo, String host, Integer port, String path, String query, String fragment)
+      throws URISyntaxException {
+
+    if (port == -1) {
+      port = null;
+    }
+
+    StringBuilder factory = new StringBuilder();
+    if (scheme == null) {
+      throw new NullPointerException("Scheme must not be null");
+    }
+    if (host == null) {
+      throw new NullPointerException("host must not be null");
+    }
+
+    factory.append(scheme).append("://");
+
+    if (userInfo != null) {
+      factory.append(userInfo).append("@");
+    }
+
+    factory.append(host);
+    if (port != null) {
+      factory.append(":").append(String.valueOf(port));
+    }
+
+    if (path != null) {
+      while (path.startsWith("/")) {
+        path = path.substring(1);
+      }
+      factory.append("/");
+      factory.append(path);
+    }
+
+    if (query != null) {
+      factory.append("?").append(query);
+    }
+
+    if (fragment != null) {
+      factory.append("#").append(fragment);
+    }
+
+    return new URI(factory.toString());
+  }
+
   public static URI resolve(String ownerURI, String href) throws URISyntaxException {
     return resolve(log, ownerURI, href);
   }
@@ -111,6 +169,10 @@ public class URIUtil {
     boolean inPath = true; // keep the first ?, denoting begining of query
     for (char c : input.toCharArray()) {
       switch (c) {
+// todo implement! test!
+//        case '/':
+//          out.append(inPath ? c : "%2F");
+//          break;
         case '&':
           out.append(inPath ? "%26" : c);
           break;
